@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\EnviarCorreoController;
+use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,7 +22,6 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios.index');
-    Route::get('/roles', [UserController::class, 'vistaroles'])->name('rol.rol');
     Route::get('/usuarios/{id}/edit', [UserController::class, 'edit'])->name('usuarios.edit');
     Route::put('/usuarios/{id}', [UserController::class, 'update'])->name('usuarios.update');
     Route::delete('/usuarios/{id}', [UserController::class, 'destroy'])->name('usuarios.destroy');
@@ -33,9 +35,24 @@ Route::middleware('auth')->group(function () {
     Route::delete('/roles/{id}', [UserController::class, 'deleteRole'])->name('roles.delete');
 
     
-   
+   // Ruta para enviar correo a un usuario por ID
+// Route::get('/enviar-correo/{id}', [EnviarCorreoController::class, 'enviarCorreo'])->name('enviar.correo');
+
+// Route::get('/test-email', function() {
+//     try {
+//         Mail::raw('Prueba de correo', function($message) {
+//             $message->to('vanesagalindez318@gmail.com')
+//                    ->subject('siuuuuuuuuuuuuuuuuuu');
+//         });
+//         return 'Correo enviado correctamente';
+//     } catch (\Exception $e) {
+//         return 'Error: ' . $e->getMessage();
+//     }
+// });
 
 
+Route::get('/enviar-correos-administrativos', [NotificacionController::class, 'enviarCorreosAdministrativos'])
+     ->name('enviar.correos.administrativos');
 
 
 
